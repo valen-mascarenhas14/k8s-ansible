@@ -15,4 +15,4 @@
 - name: Install nfs server & client
   hosts: masters
   roles:
-    - install nfs
+    - install-nfs

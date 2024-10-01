@@ -14,7 +14,7 @@ then
   chmod +x /usr/bin/yq 
 fi
  
-export SVRADDR={{ bastion_ip }}
+export SVRADDR={{ master_ip }}
 export LOCALDIR={{ nfs_directory }}
 
 DEPLYAML=/tmp/deployment.yaml
