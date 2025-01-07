@@ -1,0 +1,27 @@
+- name: Install nginx
+  yum:
+    name: nginx
+    state: present
+
+- name: Install nginx stream module
+  yum:
+    name: nginx-mod-stream
+    state: present
+
+- name: Fetch master ip
+  shell: kubectl get nodes -o wide | grep 'master' | awk '{print $6}'
+  register: master_node_ip
+
+- name: Configure nginx proxy
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: '0644'
+  vars:
+    master_ip: "{{ master_node_ip.stdout }}"
+
+- name: Restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
